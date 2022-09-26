@@ -1,7 +1,23 @@
 diff --git a/node_modules/frappe-gantt/src/index.js b/node_modules/frappe-gantt/src/index.js
-index 9777096..aec8732 100644
+index 9777096..523f85c 100644
 --- a/node_modules/frappe-gantt/src/index.js
 +++ b/node_modules/frappe-gantt/src/index.js
+@@ -1,5 +1,5 @@
+ import date_utils from './date_utils';
+-import { $, createSVG } from './svg_utils';
++import {$, createSVG} from './svg_utils';
+ import Bar from './bar';
+ import Arrow from './arrow';
+ import Popup from './popup';
+@@ -42,7 +42,7 @@ export default class Gantt {
+         } else {
+             throw new TypeError(
+                 'Frappé Gantt only supports usage of a string CSS selector,' +
+-                    " HTML DOM element or SVG DOM element for the 'element' parameter"
++                " HTML DOM element or SVG DOM element for the 'element' parameter"
+             );
+         }
+ 
 @@ -266,7 +266,9 @@ export default class Gantt {
  
      bind_events() {
@@ -13,3 +29,76 @@ index 9777096..aec8732 100644
      }
  
      render() {
+@@ -275,8 +277,10 @@ export default class Gantt {
+         this.make_grid();
+         this.make_dates();
+         this.make_bars();
+-        this.make_arrows();
+-        this.map_arrows_on_bars();
++        if (!this.options.disableDrag) {
++            this.make_arrows();
++            this.map_arrows_on_bars();
++        }
+         this.set_width();
+         this.set_scroll_position();
+     }
+@@ -307,7 +311,7 @@ export default class Gantt {
+             this.options.header_height +
+             this.options.padding +
+             (this.options.bar_height + this.options.padding) *
+-                this.tasks.length;
++            this.tasks.length;
+ 
+         createSVG('rect', {
+             x: 0,
+@@ -325,8 +329,8 @@ export default class Gantt {
+     }
+ 
+     make_grid_rows() {
+-        const rows_layer = createSVG('g', { append_to: this.layers.grid });
+-        const lines_layer = createSVG('g', { append_to: this.layers.grid });
++        const rows_layer = createSVG('g', {append_to: this.layers.grid});
++        const lines_layer = createSVG('g', {append_to: this.layers.grid});
+ 
+         const row_width = this.dates.length * this.options.column_width;
+         const row_height = this.options.bar_height + this.options.padding;
+@@ -424,7 +428,7 @@ export default class Gantt {
+             const width = this.options.column_width;
+             const height =
+                 (this.options.bar_height + this.options.padding) *
+-                    this.tasks.length +
++                this.tasks.length +
+                 this.options.header_height +
+                 this.options.padding / 2;
+ 
+@@ -510,8 +514,8 @@ export default class Gantt {
+             'Half Day_upper':
+                 date.getDate() !== last_date.getDate()
+                     ? date.getMonth() !== last_date.getMonth()
+-                      ? date_utils.format(date, 'D MMM', this.options.language)
+-                      : date_utils.format(date, 'D', this.options.language)
++                        ? date_utils.format(date, 'D MMM', this.options.language)
++                        : date_utils.format(date, 'D', this.options.language)
+                     : '',
+             Day_upper:
+                 date.getMonth() !== last_date.getMonth()
+@@ -624,8 +628,8 @@ export default class Gantt {
+ 
+         const scroll_pos =
+             hours_before_first_task /
+-                this.options.step *
+-                this.options.column_width -
++            this.options.step *
++            this.options.column_width -
+             this.options.column_width;
+ 
+         parent_element.scrollLeft = scroll_pos;
+@@ -718,7 +722,7 @@ export default class Gantt {
+                         });
+                     }
+                 } else if (is_dragging) {
+-                    bar.update_bar_position({ x: $bar.ox + $bar.finaldx });
++                    bar.update_bar_position({x: $bar.ox + $bar.finaldx});
+                 }
+             });
+         });
