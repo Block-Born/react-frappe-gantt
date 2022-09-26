@@ -689,7 +689,7 @@ class Bar {
             this.draw_progress_bar();
         }
         this.draw_label();
-        if (!this.gant.disableDrag) {
+        if (!this.gantt.disableDrag) {
             this.draw_resize_handles();
         }
     }
