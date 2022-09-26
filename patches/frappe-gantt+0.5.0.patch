@@ -1,0 +1,15 @@
+diff --git a/node_modules/frappe-gantt/src/index.js b/node_modules/frappe-gantt/src/index.js
+index 9777096..aec8732 100644
+--- a/node_modules/frappe-gantt/src/index.js
++++ b/node_modules/frappe-gantt/src/index.js
+@@ -266,7 +266,9 @@ export default class Gantt {
+ 
+     bind_events() {
+         this.bind_grid_click();
+-        this.bind_bar_events();
++        if (!this.options.disableDrag) {
++            this.bind_bar_events();
++        }
+     }
+ 
+     render() {
