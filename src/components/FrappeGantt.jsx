@@ -31,6 +31,7 @@ export default class FrappeGantt extends Component {
 
   componentDidMount() {
     this._gantt = new Gantt(this._svg.current, this.state.tasks, {
+      ...this.props,
       on_click: this.props.onClick,
       on_view_change: this.props.onViewChange,
       on_progress_change: (task, progress) => {
