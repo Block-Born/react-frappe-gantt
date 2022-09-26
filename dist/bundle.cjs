@@ -2224,6 +2224,7 @@ var FrappeGantt = /*#__PURE__*/function (_Component) {
     value: function componentDidMount() {
       var _this2 = this;
 
+      console.log(111, this.props);
       this._gantt = new Gantt(this._svg.current, this.state.tasks, _objectSpread2(_objectSpread2({}, this.props), {}, {
         on_click: this.props.onClick,
         on_view_change: this.props.onViewChange,
