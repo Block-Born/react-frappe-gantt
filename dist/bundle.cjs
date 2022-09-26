@@ -622,7 +622,7 @@ class Bar {
     constructor(gantt, task) {
         this.set_defaults(gantt, task);
         this.prepare();
-        this.draw();
+        this.draw(task);
         this.bind();
     }
 
@@ -649,8 +649,8 @@ class Bar {
         this.width = this.gantt.options.column_width * this.duration;
         this.progress_width =
             this.gantt.options.column_width *
-                this.duration *
-                (this.task.progress / 100) || 0;
+            this.duration *
+            (this.task.progress / 100) || 0;
         this.group = createSVG('g', {
             class: 'bar-wrapper ' + (this.task.custom_class || ''),
             'data-id': this.task.id
@@ -666,28 +666,32 @@ class Bar {
     }
 
     prepare_helpers() {
-        SVGElement.prototype.getX = function() {
+        SVGElement.prototype.getX = function () {
             return +this.getAttribute('x');
         };
-        SVGElement.prototype.getY = function() {
+        SVGElement.prototype.getY = function () {
             return +this.getAttribute('y');
         };
-        SVGElement.prototype.getWidth = function() {
+        SVGElement.prototype.getWidth = function () {
             return +this.getAttribute('width');
         };
-        SVGElement.prototype.getHeight = function() {
+        SVGElement.prototype.getHeight = function () {
             return +this.getAttribute('height');
         };
-        SVGElement.prototype.getEndX = function() {
+        SVGElement.prototype.getEndX = function () {
             return this.getX() + this.getWidth();
         };
     }
 
-    draw() {
+    draw(task) {
         this.draw_bar();
-        this.draw_progress_bar();
+        if (!!this.task.progress) {
+            this.draw_progress_bar();
+        }
         this.draw_label();
-        this.draw_resize_handles();
+        if (!this.gant.disableDrag) {
+            this.draw_resize_handles();
+        }
     }
 
     draw_bar() {
@@ -832,7 +836,7 @@ class Bar {
         });
     }
 
-    update_bar_position({ x = null, width = null }) {
+    update_bar_position({x = null, width = null}) {
         const bar = this.$bar;
         if (x) {
             // get all x values of parent task
@@ -860,7 +864,7 @@ class Bar {
 
     date_changed() {
         let changed = false;
-        const { new_start_date, new_end_date } = this.compute_start_end_date();
+        const {new_start_date, new_end_date} = this.compute_start_end_date();
 
         if (Number(this.task._start) !== Number(new_start_date)) {
             changed = true;
@@ -907,7 +911,7 @@ class Bar {
             'hour'
         );
 
-        return { new_start_date, new_end_date };
+        return {new_start_date, new_end_date};
     }
 
     compute_progress() {
@@ -917,7 +921,7 @@ class Bar {
     }
 
     compute_x() {
-        const { step, column_width } = this.gantt.options;
+        const {step, column_width} = this.gantt.options;
         const task_start = this.task._start;
         const gantt_start = this.gantt.gantt_start;
 
@@ -1011,7 +1015,7 @@ class Bar {
             .setAttribute('x', bar.getEndX() - 9);
         const handle = this.group.querySelector('.handle.progress');
         handle &&
-            handle.setAttribute('points', this.get_progress_polygon_points());
+        handle.setAttribute('points', this.get_progress_polygon_points());
     }
 
     update_arrow_position() {
