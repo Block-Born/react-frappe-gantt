@@ -1158,7 +1158,7 @@ class Popup {
             this.pointer = this.parent.querySelector('.pointer');
         } else {
             // set data
-            this.title.innerHTML = options.title + options.tag ? ` [${options.tag}]` : '';
+            this.title.innerHTML = options.title + (!!options.tag ? ` [${options.tag}]` : '');
             this.subtitle.innerHTML = options.subtitle;
             this.parent.style.width = this.parent.clientWidth + 'px';
         }
