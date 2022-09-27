@@ -1,5 +1,5 @@
 diff --git a/node_modules/frappe-gantt/src/bar.js b/node_modules/frappe-gantt/src/bar.js
-index c9240df..9decde8 100644
+index c9240df..cda9ba2 100644
 --- a/node_modules/frappe-gantt/src/bar.js
 +++ b/node_modules/frappe-gantt/src/bar.js
 @@ -1,11 +1,11 @@
@@ -62,7 +62,7 @@ index c9240df..9decde8 100644
 +        }
          this.draw_label();
 -        this.draw_resize_handles();
-+        if (!this.gantt.disableDrag) {
++        if (!this.gantt.options.disableDrag) {
 +            this.draw_resize_handles();
 +        }
      }
@@ -217,3 +217,16 @@ index 9777096..523f85c 100644
                  }
              });
          });
+diff --git a/node_modules/frappe-gantt/src/popup.js b/node_modules/frappe-gantt/src/popup.js
+index 39552a5..f6627c6 100644
+--- a/node_modules/frappe-gantt/src/popup.js
++++ b/node_modules/frappe-gantt/src/popup.js
+@@ -35,7 +35,7 @@ export default class Popup {
+             this.pointer = this.parent.querySelector('.pointer');
+         } else {
+             // set data
+-            this.title.innerHTML = options.title;
++            this.title.innerHTML = options.title + options.tag ? ` [${options.tag}]` : '';
+             this.subtitle.innerHTML = options.subtitle;
+             this.parent.style.width = this.parent.clientWidth + 'px';
+         }

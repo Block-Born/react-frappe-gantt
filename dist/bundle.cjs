@@ -689,7 +689,7 @@ class Bar {
             this.draw_progress_bar();
         }
         this.draw_label();
-        if (!this.gantt.disableDrag) {
+        if (!this.gantt.options.disableDrag) {
             this.draw_resize_handles();
         }
     }
@@ -1158,7 +1158,7 @@ class Popup {
             this.pointer = this.parent.querySelector('.pointer');
         } else {
             // set data
-            this.title.innerHTML = options.title;
+            this.title.innerHTML = options.title + options.tag ? ` [${options.tag}]` : '';
             this.subtitle.innerHTML = options.subtitle;
             this.parent.style.width = this.parent.clientWidth + 'px';
         }
@@ -2163,17 +2163,17 @@ var Task = /*#__PURE__*/function () {
     this.name = "";
     this.start = "";
     this.end = "";
-    this._progress = 0.52;
+    this._progress = 0;
     Object.assign(this, options);
   }
 
   _createClass(Task, [{
     key: "progress",
     get: function get() {
-      return this._progress || 0.52;
+      return this._progress || 0;
     },
     set: function set(value) {
-      this._progress = value || 0.52;
+      this._progress = value || 0;
     }
   }, {
     key: "setDependencies",

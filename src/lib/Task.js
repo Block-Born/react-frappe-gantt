@@ -5,14 +5,14 @@ export default class Task {
     this.name = "";
     this.start = "";
     this.end = "";
-    this._progress = 0.52;
+    this._progress = 0;
     Object.assign(this, options);
   }
   get progress() {
-    return this._progress || 0.52;
+    return this._progress || 0;
   }
   set progress(value) {
-    this._progress = value || 0.52;
+    this._progress = value || 0;
   }
   setDependencies(value) {
     this._dependencies = Array.isArray(value)
